@@ -21,34 +21,50 @@ class MomentumGradientDescent:
         if record_history:
             # to store the weight history for visualization
             self.w_history = []
-
+            
     def run(self, gradient_fn, x, y, w):
         grad = np.inf
         t = 1
         N, D = x.shape
-        self.prev_delta_w = np.zeros(D)
+        self.prev_delta_w = np.zeros(w.shape)
         while np.linalg.norm(grad) > self.epsilon and t < self.max_iters:
-            for i in range(0, N, self.batch_size):
-                if x.ndim == 1:
-                    batch_x = x[i : i + self.batch_size]
-                else:
-                    batch_x = x[i : i + self.batch_size, :]
+            grad = gradient_fn(x, y, w)
+            delta_w = self.get_delta_w(grad)
 
-                if y.ndim == 1:
-                    batch_y = y[i : i + self.batch_size]
-                else:
-                    batch_y = y[i : i + self.batch_size, :]
-
-                # compute the gradient with present weight
-                grad = gradient_fn(batch_x, batch_y, w)
-                delta_w = self.get_delta_w(grad)
-
-                # weight update step
-                w = w - self.learning_rate * delta_w
-                if self.record_history:
-                    self.w_history.append(w)
+            # weight update step
+            w = w - self.learning_rate * delta_w
+            if self.record_history:
+                self.w_history.append(w)
             t += 1
         return w
+
+#     def run(self, gradient_fn, x, y, w):
+#         grad = np.inf
+#         t = 1
+#         N, D = x.shape
+#         self.prev_delta_w = np.zeros(D)
+#         while np.linalg.norm(grad) > self.epsilon and t < self.max_iters:
+#             for i in range(0, N, self.batch_size):
+#                 if x.ndim == 1:
+#                     batch_x = x[i : i + self.batch_size]
+#                 else:
+#                     batch_x = x[i : i + self.batch_size, :]
+
+#                 if y.ndim == 1:
+#                     batch_y = y[i : i + self.batch_size]
+#                 else:
+#                     batch_y = y[i : i + self.batch_size, :]
+
+#                 # compute the gradient with present weight
+#                 grad = gradient_fn(batch_x, batch_y, w)
+#                 delta_w = self.get_delta_w(grad)
+
+#                 # weight update step
+#                 w = w - self.learning_rate * delta_w
+#                 if self.record_history:
+#                     self.w_history.append(w)
+#             t += 1
+#         return w
 
     def get_delta_w(self, grad):
         beta = self.momentum
