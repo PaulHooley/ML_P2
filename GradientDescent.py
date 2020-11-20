@@ -8,7 +8,7 @@ class MomentumGradientDescent:
         momentum=0.9,
         max_iters=1e4,
         epsilon=1e-8,
-        batch_size=32,
+        batch_size=10,
         record_history=False,
     ):
         self.learning_rate = learning_rate
@@ -21,7 +21,7 @@ class MomentumGradientDescent:
         if record_history:
             # to store the weight history for visualization
             self.w_history = []
-            
+
     def run(self, gradient_fn, x, y, w):
         grad = np.inf
         t = 1
