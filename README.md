@@ -6,6 +6,13 @@
 | Jalal Kalyati | 260808199  |
 | Paul Hooley   | 260727150  |
 
+#### File Guide
+
+* `SoftmaxRegression.ipynb`: our main model implementation + related analysis
+* `RegularizedSoftmaxRegression.ipynb`: a variation of our model with L2 regularization + related analysis
+* `TerminationCondition.ipynb`: our analysis for the suggested alternate termination condition (with _T_ iterations)
+
+
 #### Set up a Python virtual environment and activate it:
 
 ```
